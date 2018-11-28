@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        view = findViewById(R.id.drawingView) as DrawingSurfaceView?
+        view = findViewById(R.id.drawingView) as DrawingSurfaceView
 
         radiusAnim = AnimatorInflater.loadAnimator(this, R.animator.animations) as AnimatorSet
 
@@ -44,7 +44,21 @@ class MainActivity : AppCompatActivity() {
         val y = event.y - supportActionBar!!.height //closer to center...
 
         val action = MotionEventCompat.getActionMasked(event)
+
+        val pointerIndex = MotionEventCompat.getActionIndex(event)
+        val pointerId = MotionEventCompat.getPointerId(event, pointerIndex)
+
         when (action) {
+            MotionEvent.ACTION_POINTER_DOWN //second finger touches down
+            -> {
+                Log.v(TAG, "second finger down")
+                view.addTouch(pointerId, event.getX(pointerIndex), event.getY(pointerIndex))
+            }
+            MotionEvent.ACTION_POINTER_UP //remove fingers
+            -> {
+                Log.v(TAG, "second finger up")
+                view.removeTouch(pointerId)
+            }
             MotionEvent.ACTION_DOWN //put finger down
             -> {
                 //Log.v(TAG, "finger down");
@@ -76,6 +90,7 @@ class MainActivity : AppCompatActivity() {
             -> return super.onTouchEvent(event)
             else -> return super.onTouchEvent(event)
         }
+        return super.onTouchEvent(event)
     }
 
     private inner class MyGestureListener : GestureDetector.SimpleOnGestureListener() {

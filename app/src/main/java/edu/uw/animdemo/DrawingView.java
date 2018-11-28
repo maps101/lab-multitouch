@@ -8,6 +8,9 @@ import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.View;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * A basic custom view for drawing on.
  * @author Joel Ross
@@ -98,4 +101,5 @@ public class DrawingView extends View {
         canvas.drawBitmap(bmp, 0, 0, null); //and then draw the BitMap onto the canvas.
         //Canvas bmc = new Canvas(bmp); //we can also make a canvas out of a Bitmap to draw on that (like fetching g2d from a BufferedImage) if we don't want to double-buffer
     }
+
 }
